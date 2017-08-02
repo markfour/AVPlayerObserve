@@ -6,11 +6,13 @@
 import UIKit
 import AVKit
 import AVFoundation
+import Dispatch
 
 class PlayerViewController: AVPlayerViewController {
 
   var tableView: UITableView?
   var timer = Timer()
+  var dispathTimer: DispatchSourceTimer?
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -25,24 +27,24 @@ class PlayerViewController: AVPlayerViewController {
     print("duration \(player?.currentItem?.duration.seconds)")
     // player?.addObserver(self, forKeyPath: "rate", options: .new, context: nil)
     // NotificationCenter.default.addObserver(self, forKeyPath: #selector(playerDidFinishPlaying(_:)), options: nil, context: nil)
+    // NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying(notification:)), name: nil, object: nil)
 
-    //    NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying(notification:)), name: nil, object: nil)
-
-    //    weak var this = self
-    //    timeObserver = myPlayer.addPeriodicTimeObserver(
-    //    forInterval: CMTime(seconds: 1.0, preferredTimescale: 1000), queue: DispatchQueue.main) { (time) in
-    //      if this != nil {
+    // weak var this = self
+    // timeObserver = myPlayer.addPeriodicTimeObserver(
+    // forInterval: CMTime(seconds: 1.0, preferredTimescale: 1000), queue: DispatchQueue.main) { (time) in
+    //    if this != nil {
     //
-    //      }
     //    }
+    //  }
 
     tableView = UITableView(frame: CGRect(x: 0, y: view.frame.height / 2, width: view.frame.width, height: view.frame.height / 2))
     tableView = UITableView(frame: CGRect(x: 0, y: view.frame.height / 2, width: view.frame.width, height: view.frame.height / 2), style: .plain)
 //    tableView?.backgroundColor = .s
     view.addSubview(tableView!)
 
-    addPeriodicTimeObserver()
-    startUpdateTimer()
+//    addPeriodicTimeObserver()
+//    startUpdateTimer()
+    startUpdateDispach()
   }
 
   override func viewDidLayoutSubviews() {
@@ -68,9 +70,16 @@ class PlayerViewController: AVPlayerViewController {
     }
   }
 
+//  func updatePerFrame() {
+//    print("updatePerFrame")
+//    title = String(describing: player?.currentItem?.currentTime().seconds)
+//  }
+
   func updatePerFrame() {
     print("updatePerFrame")
-    title = String(describing: player?.currentItem?.currentTime().seconds)
+    DispatchQueue.main.async {
+      self.title = String(describing: self.player?.currentItem?.currentTime().seconds)
+    }
   }
 
   func playerDidFinishPlaying(notification: NSNotification) {
@@ -82,7 +91,6 @@ class PlayerViewController: AVPlayerViewController {
     }
   }
 
-
   func startUpdateTimer() {
     timer = Timer.scheduledTimer(timeInterval: 0.016,
                                  target: self,
@@ -91,6 +99,21 @@ class PlayerViewController: AVPlayerViewController {
                                  repeats: true)
   }
 
+  func startUpdateDispach() {
+//    let queue = DispatchQueue.global(qos: .userInitiated).async {
+//      self.updatePerFrame()
+//    }
+
+    let queue = DispatchQueue(label: "label")
+
+    dispathTimer?.cancel()
+    dispathTimer = DispatchSource.makeTimerSource(flags: .strict, queue: queue)
+    dispathTimer?.scheduleRepeating(deadline: .now(), interval: 0.016)
+    dispathTimer?.setEventHandler(qos: .userInitiated, flags: .assignCurrentContext, handler: { 
+      self.updatePerFrame()
+    })
+    dispathTimer?.resume()
+  }
 
   //    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
   //      print("observeValue \(keyPath)")
