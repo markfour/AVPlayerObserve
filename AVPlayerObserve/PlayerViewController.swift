@@ -13,15 +13,40 @@ class PlayerViewController: AVPlayerViewController {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
 
-//    player = AVPlayer(url: URL(string: "https://dl.dropboxusercontent.com/content_link/BdhzBX00miwXHZvYAXKfDIv8NNdxQjPc9tliIJwdzpN41OGjczZtvrvmxxv5KwBP/file?dl=1")!)
+    //    player = AVPlayer(url: URL(string: "https://dl.dropboxusercontent.com/content_link/BdhzBX00miwXHZvYAXKfDIv8NNdxQjPc9tliIJwdzpN41OGjczZtvrvmxxv5KwBP/file?dl=1")!)
     //    player = AVPlayer(url: Bundle.main.url(forResource: "sample", withExtension: ".au")!)
     player = AVPlayer(url: Bundle.main.url(forResource: "material-design", withExtension: ".mp4")!)
     player?.play()
+
     print("duration \(player?.currentItem?.duration.seconds)")
     // player?.addObserver(self, forKeyPath: "rate", options: .new, context: nil)
     // NotificationCenter.default.addObserver(self, forKeyPath: #selector(playerDidFinishPlaying(_:)), options: nil, context: nil)
 
-    NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying(notification:)), name: nil, object: nil)
+//    NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying(notification:)), name: nil, object: nil)
+
+    //    weak var this = self
+    //    timeObserver = myPlayer.addPeriodicTimeObserver(
+    //    forInterval: CMTime(seconds: 1.0, preferredTimescale: 1000), queue: DispatchQueue.main) { (time) in
+    //      if this != nil {
+    //
+    //      }
+    //    }
+
+  }
+
+  func addPeriodicTimeObserver() {
+    // Invoke callback every half second
+    let interval = CMTime(seconds: 0.5,
+                          preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+    // Queue on which to invoke the callback
+    let mainQueue = DispatchQueue.main
+    // Add time observer
+    let timeObserverToken =
+      player?.addPeriodicTimeObserver(forInterval: interval, queue: mainQueue) {
+        [weak self] time in
+        print("time \(time)")
+        // update player transport UI
+    }
   }
 
   func playerDidFinishPlaying(notification: NSNotification) {
@@ -33,18 +58,18 @@ class PlayerViewController: AVPlayerViewController {
     }
   }
 
-//    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-//      print("observeValue \(keyPath)")
-//      if keyPath == "rate" {
-//        if let rate = player?.rate {
-//          if rate == 0.0 {
-//            print("Pause")
-//          } else if rate >= 0.5 {
-//            print("Play")
-//          } else {
-//            print("Unknown")
-//          }
-//        }
-//      }
-//    }
+  //    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+  //      print("observeValue \(keyPath)")
+  //      if keyPath == "rate" {
+  //        if let rate = player?.rate {
+  //          if rate == 0.0 {
+  //            print("Pause")
+  //          } else if rate >= 0.5 {
+  //            print("Play")
+  //          } else {
+  //            print("Unknown")
+  //          }
+  //        }
+  //      }
+  //    }
 }
