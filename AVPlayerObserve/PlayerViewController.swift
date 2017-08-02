@@ -15,14 +15,15 @@ class PlayerViewController: AVPlayerViewController {
 
     //    player = AVPlayer(url: URL(string: "https://dl.dropboxusercontent.com/content_link/BdhzBX00miwXHZvYAXKfDIv8NNdxQjPc9tliIJwdzpN41OGjczZtvrvmxxv5KwBP/file?dl=1")!)
     //    player = AVPlayer(url: Bundle.main.url(forResource: "sample", withExtension: ".au")!)
-    player = AVPlayer(url: Bundle.main.url(forResource: "material-design", withExtension: ".mp4")!)
+    player = AVPlayer(url: URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8")!)
+//    player = AVPlayer(url: Bundle.main.url(forResource: "material-design", withExtension: ".mp4")!)
     player?.play()
 
     print("duration \(player?.currentItem?.duration.seconds)")
     // player?.addObserver(self, forKeyPath: "rate", options: .new, context: nil)
     // NotificationCenter.default.addObserver(self, forKeyPath: #selector(playerDidFinishPlaying(_:)), options: nil, context: nil)
 
-//    NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying(notification:)), name: nil, object: nil)
+    //    NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying(notification:)), name: nil, object: nil)
 
     //    weak var this = self
     //    timeObserver = myPlayer.addPeriodicTimeObserver(
@@ -32,11 +33,14 @@ class PlayerViewController: AVPlayerViewController {
     //      }
     //    }
 
+    addPeriodicTimeObserver()
+
+    UIScrollView 
   }
 
   func addPeriodicTimeObserver() {
     // Invoke callback every half second
-    let interval = CMTime(seconds: 0.5,
+    let interval = CMTime(seconds: 0.1,
                           preferredTimescale: CMTimeScale(NSEC_PER_SEC))
     // Queue on which to invoke the callback
     let mainQueue = DispatchQueue.main
