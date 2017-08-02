@@ -9,6 +9,9 @@ import AVFoundation
 
 class PlayerViewController: AVPlayerViewController {
 
+  var tableView: UITableView?
+  var timer = Timer()
+
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
@@ -33,14 +36,24 @@ class PlayerViewController: AVPlayerViewController {
     //      }
     //    }
 
-    addPeriodicTimeObserver()
+    tableView = UITableView(frame: CGRect(x: 0, y: view.frame.height / 2, width: view.frame.width, height: view.frame.height / 2))
+    tableView = UITableView(frame: CGRect(x: 0, y: view.frame.height / 2, width: view.frame.width, height: view.frame.height / 2), style: .plain)
+//    tableView?.backgroundColor = .s
+    view.addSubview(tableView!)
 
-    UIScrollView 
+    addPeriodicTimeObserver()
+    startUpdateTimer()
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    tableView?.frame = CGRect(x: 0, y: view.frame.height / 2, width: view.frame.width, height: view.frame.height / 2)
   }
 
   func addPeriodicTimeObserver() {
     // Invoke callback every half second
-    let interval = CMTime(seconds: 0.1,
+    let frame = Double(1 / 60)
+    let interval = CMTime(seconds: 0.016,
                           preferredTimescale: CMTimeScale(NSEC_PER_SEC))
     // Queue on which to invoke the callback
     let mainQueue = DispatchQueue.main
@@ -53,6 +66,11 @@ class PlayerViewController: AVPlayerViewController {
     }
   }
 
+  func updatePerFrame() {
+    print("updatePerFrame")
+//    title = player.
+  }
+
   func playerDidFinishPlaying(notification: NSNotification) {
     DispatchQueue.global().async {
       if let player = self.player, let item = player.currentItem {
@@ -61,6 +79,16 @@ class PlayerViewController: AVPlayerViewController {
       }
     }
   }
+
+
+  func startUpdateTimer() {
+    timer = Timer.scheduledTimer(timeInterval: 0.016,
+                                 target: self,
+                                 selector: #selector(self.updatePerFrame),
+                                 userInfo: nil,
+                                 repeats: true)
+  }
+
 
   //    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
   //      print("observeValue \(keyPath)")
