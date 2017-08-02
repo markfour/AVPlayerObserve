@@ -12,6 +12,7 @@
 		A05E4AF71F316845002B6F80 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A05E4AF51F316845002B6F80 /* Main.storyboard */; };
 		A05E4AF91F316845002B6F80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A05E4AF81F316845002B6F80 /* Assets.xcassets */; };
 		A05E4AFC1F316845002B6F80 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A05E4AFA1F316845002B6F80 /* LaunchScreen.storyboard */; };
+		A05E4B041F31692D002B6F80 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05E4B031F31692D002B6F80 /* PlayerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		A05E4AF81F316845002B6F80 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A05E4AFB1F316845002B6F80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A05E4AFD1F316845002B6F80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A05E4B031F31692D002B6F80 /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,11 +57,12 @@
 			isa = PBXGroup;
 			children = (
 				A05E4AF11F316845002B6F80 /* AppDelegate.swift */,
-				A05E4AF31F316845002B6F80 /* ViewController.swift */,
-				A05E4AF51F316845002B6F80 /* Main.storyboard */,
 				A05E4AF81F316845002B6F80 /* Assets.xcassets */,
-				A05E4AFA1F316845002B6F80 /* LaunchScreen.storyboard */,
 				A05E4AFD1F316845002B6F80 /* Info.plist */,
+				A05E4AFA1F316845002B6F80 /* LaunchScreen.storyboard */,
+				A05E4AF51F316845002B6F80 /* Main.storyboard */,
+				A05E4B031F31692D002B6F80 /* PlayerViewController.swift */,
+				A05E4AF31F316845002B6F80 /* ViewController.swift */,
 			);
 			path = AVPlayerObserve;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 			files = (
 				A05E4AF41F316845002B6F80 /* ViewController.swift in Sources */,
 				A05E4AF21F316845002B6F80 /* AppDelegate.swift in Sources */,
+				A05E4B041F31692D002B6F80 /* PlayerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +303,7 @@
 				A05E4B021F316845002B6F80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
