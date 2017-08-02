@@ -63,12 +63,14 @@ class PlayerViewController: AVPlayerViewController {
         [weak self] time in
         print("time \(time)")
         // update player transport UI
+        guard let strongSelf = self else { return }
+        strongSelf.title = String(describing: strongSelf.player?.currentItem?.currentTime().seconds)
     }
   }
 
   func updatePerFrame() {
     print("updatePerFrame")
-//    title = player.
+    title = String(describing: player?.currentItem?.currentTime().seconds)
   }
 
   func playerDidFinishPlaying(notification: NSNotification) {
